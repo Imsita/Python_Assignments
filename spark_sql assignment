@@ -1,0 +1,23 @@
+import org.apache.spark.sql.SparkSession
+
+object PhoneNumberFetcher{
+  def main(args:Array[String]):Unit={
+    val spark = SparkSession.builder()
+    .appName("PhoneNumberFetcher")
+    .config("spark.master","local")
+    .getOrCreate()
+
+  val phoneNumbersDF = spark.read
+   .format("csv")
+   .option("header",""true")
+   .load("path/to/phone_numbers.csv") // Replace with teh actual path to csv file
+
+   phoneNumbers.DF.createOrReplaceTempView("phone_numbers")
+
+   val officePhoneNumbers = spark.sql("SELECT phone_number FROM phone_numbers WHERE type = 'office'")
+
+     officePhoneNumbers.show()
+
+     spark.stop()
+  }
+} 
